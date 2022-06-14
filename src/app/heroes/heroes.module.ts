@@ -5,9 +5,7 @@ import { BuscarComponent } from './pages/buscar/buscar.component';
 import { VerComponent } from './pages/ver/ver.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ListadoComponent } from './pages/listado/listado.component';
-import { ErrorPageComponent } from './pages/error-page/error-page.component';
-
-
+import { HeroesRoutingModule } from './heroes-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,11 +13,8 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
     BuscarComponent,
     VerComponent,
     HomeComponent,
-    ListadoComponent,
-    ErrorPageComponent
+    ListadoComponent
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule, HeroesRoutingModule],
 })
-export class HeroesModule { }
+export class HeroesModule {}
