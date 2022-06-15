@@ -1,5 +1,49 @@
-<h1>Heroes app</h1>
-<hr>
+<mat-sidenav-container fullScreen>
+    <mat-toolbar>
+        <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <div class="box">
+            <button mat-button>
+                Logout
+            </button>
+        </div>
+    </mat-toolbar>
 
-<!-- Implementación adecuada de rutas hijas para módulo de heroes -->
-<router-outlet></router-outlet>
+    <mat-sidenav #sidenav mode="push">
+        <mat-toolbar>
+            <span>Menu</span>
+            <div class="box">
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar>
+        <mat-nav-list>
+            <!-- Ya estamos en la ruta heroes -->
+            <a routerLink="./listado" 
+               mat-list-item (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>label</mat-icon>
+                <span>Listado de Héroes</span>
+            </a>
+            <a routerLink="./agregar"
+               mat-list-item
+               (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>add</mat-icon>
+                <span>Añadir Héroe</span>
+            </a>
+            <a routerLink="./buscar"
+               mat-list-item
+               (click)="sidenav.toggle()">
+                <mat-icon mat-list-icon>search</mat-icon>
+                <span>Buscar Héroe</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- Definimos nuestras rutas -->
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+
+</mat-sidenav-container>

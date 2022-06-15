@@ -6,6 +6,10 @@ import { VerComponent } from './pages/ver/ver.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ListadoComponent } from './pages/listado/listado.component';
 import { HeroesRoutingModule } from './heroes-routing.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../material/material.module';
+import { HeroeCardComponent } from './components/heroe-card-component/heroe-card.component';
+import { ImagenPipe } from './pipes/imagen.pipe';
 
 @NgModule({
   declarations: [
@@ -13,8 +17,15 @@ import { HeroesRoutingModule } from './heroes-routing.module';
     BuscarComponent,
     VerComponent,
     HomeComponent,
-    ListadoComponent
+    ListadoComponent,
+    HeroeCardComponent,
+    ImagenPipe,
   ],
-  imports: [CommonModule, HeroesRoutingModule],
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    HeroesRoutingModule,
+    MaterialModule,
+  ],
 })
 export class HeroesModule {}

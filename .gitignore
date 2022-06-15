@@ -41,5 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Assets directory
+assets
+
 # Info file
 info.txt
+npmPackages.txt
