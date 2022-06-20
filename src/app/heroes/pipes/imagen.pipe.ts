@@ -8,7 +8,9 @@ export class ImagenPipe implements PipeTransform {
   transform(heroe: Heroe, ...args: unknown[]): string {
     const { id } = heroe;
     let imagePath: string = '';
-    if (id?.trim().length != 0) {
+    if (heroe.alt_img && heroe.alt_img.trim().length != 0) {
+      imagePath = `${heroe.alt_img}`;
+    } else if (id && id.trim().length != 0){
       imagePath = `../../../assets/heroes/${id}.jpg`;
     } else {
       imagePath = '../../../assets/no-image.png';
