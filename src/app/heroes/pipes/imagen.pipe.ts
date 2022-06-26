@@ -3,9 +3,11 @@ import { Heroe } from '../interfaces/heroes-response.interface';
 
 @Pipe({
   name: 'imagen',
+  // pure: false
 })
 export class ImagenPipe implements PipeTransform {
   transform(heroe: Heroe, ...args: unknown[]): string {
+    console.log('¡Pipe imagen se proceso!');
     const { id } = heroe;
     let imagePath: string = '';
     if (heroe.alt_img && heroe.alt_img.trim().length != 0) {

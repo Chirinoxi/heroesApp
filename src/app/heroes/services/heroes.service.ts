@@ -60,10 +60,11 @@ export class HeroesService {
   public updateHeroe(heroe: Heroe): Observable<Heroe> {
     let url: string = this.baseUrl.toString() + 'heroes/' + heroe.id;
     return this.http.patch<Heroe>(url, heroe);
+    // return this.http.put<Heroe>(url, heroe);
   }
 
-  public deleteHeroe(heroe: Heroe): Observable<Heroe> {
-    let url: string = this.baseUrl.toString() + 'heroes/' + heroe.id;
-    return this.http.delete<Heroe>(url);
+  public deleteHeroe(id: string): Observable<Heroe> {
+    let url: string = this.baseUrl.toString() + 'heroes/' + id;
+    return this.http.delete<any>(url);
   }
 }

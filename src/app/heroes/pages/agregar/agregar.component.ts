@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { Heroe, Publisher } from '../../interfaces/heroes-response.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 
 @Component({
   selector: 'app-agregar',
@@ -12,7 +15,7 @@ import { map, switchMap } from 'rxjs';
       img {
         width: 100%;
       }
-    `
+    `,
   ],
 })
 export class AgregarComponent implements OnInit {
@@ -42,21 +45,22 @@ export class AgregarComponent implements OnInit {
   constructor(
     private heroesService: HeroesService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.route.url
-      .subscribe((item) => {
-        this.rutaActiva = item[0].path;
-        // Si nuestra ruta activa es editar, cargamos los datos del héroe !
-        if (this.rutaActiva == 'editar'){
-          const heroeId = item[1].path;
-          this.heroesService.getHeroeById(heroeId)
-            .subscribe( heroe => this.heroe = heroe);
-        }
+    this.route.url.subscribe((item) => {
+      this.rutaActiva = item[0].path;
+      // Si nuestra ruta activa es editar, cargamos los datos del héroe !
+      if (this.rutaActiva == 'editar') {
+        const heroeId = item[1].path;
+        this.heroesService
+          .getHeroeById(heroeId)
+          .subscribe((heroe) => (this.heroe = heroe));
       }
-    );
+    });
   }
 
   public get rutaActiva(): string {
@@ -86,21 +90,64 @@ export class AgregarComponent implements OnInit {
   public guardarHeroe(): void {
     if (this.heroe.superhero.trim().length == 0) return;
 
-    if (this.heroe.id == ''){
+    if (this.heroe.id == '') {
       // Agregar heroe
-      this.heroesService.insertHeroe(this.heroe)
-        .subscribe((heroe) => {
-          console.log('heroe:', heroe);
-          this.router.navigate(['/heroes/editar', heroe.id]);
-        }
-      );
+      this.heroesService.insertHeroe(this.heroe).subscribe((heroe) => {
+        console.log('heroe:', heroe);
+        this.mostrarSnackBar('Registro creado');
+        this.router.navigate(['/heroes/editar', heroe.id]);
+      });
     } else {
       // Editar Heroe
-      this.heroesService.updateHeroe(this.heroe)
-        .subscribe( (heroe) => {
-          this.router.navigate(['/heroes', heroe.id]);
-        }
-      );
+      this.heroesService.updateHeroe(this.heroe).subscribe((heroe) => {
+        console.log('heroe:', heroe);
+        this.mostrarSnackBar('Registro actualizado');
+        this.router.navigate(['/heroes', heroe.id]);
+      });
     }
+  }
+
+  public eliminarHeroe(): boolean {
+    if (this.heroe.id == undefined) return false;
+    try {
+      const dialog = this.mostrarDialog();
+      // ---------------- FORMA # 1 ----------------
+      dialog.afterClosed().subscribe((result) => {
+        console.log('result:', result);
+        if (result) {
+          this.heroesService.deleteHeroe(this.heroe.id!)
+            .subscribe((item) => {
+              this.router.navigate(['/heroes/listado']);
+              return true;
+            }
+          );
+        }
+      });
+      // ---------------- TODO: FORMA # 2 ----------------
+      // dialog.afterClosed().pipe(
+      //   switchMap( (result): any => {
+      //     console.log("result:", result);
+      //     return;
+      //   })
+      // )
+    } catch (error) {
+      console.log('error:', error);
+    }
+    return false;
+  }
+
+  public mostrarSnackBar(mensaje: string): void {
+    this.snackBar.open(mensaje, 'ok!', {
+      duration: 3000,
+    });
+  }
+
+  public mostrarDialog(): MatDialogRef<ConfirmarComponent>{
+    const dialog = this.dialog.open(ConfirmarComponent, {
+      width: '300px',
+      data: { ...this.heroe },
+    });
+
+    return dialog;
   }
 }

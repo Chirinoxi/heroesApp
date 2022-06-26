@@ -12,6 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material/material.module';
 import { HeroeCardComponent } from './components/heroe-card-component/heroe-card.component';
 import { ImagenPipe } from './pipes/imagen.pipe';
+import { ConfirmarComponent } from './components/confirmar/confirmar.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ImagenPipe } from './pipes/imagen.pipe';
     ListadoComponent,
     HeroeCardComponent,
     ImagenPipe,
+    ConfirmarComponent,
   ],
   imports: [
     CommonModule,
