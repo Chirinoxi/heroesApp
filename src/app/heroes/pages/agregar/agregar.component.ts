@@ -93,14 +93,12 @@ export class AgregarComponent implements OnInit {
     if (this.heroe.id == '') {
       // Agregar heroe
       this.heroesService.insertHeroe(this.heroe).subscribe((heroe) => {
-        console.log('heroe:', heroe);
         this.mostrarSnackBar('Registro creado');
         this.router.navigate(['/heroes/editar', heroe.id]);
       });
     } else {
       // Editar Heroe
       this.heroesService.updateHeroe(this.heroe).subscribe((heroe) => {
-        console.log('heroe:', heroe);
         this.mostrarSnackBar('Registro actualizado');
         this.router.navigate(['/heroes', heroe.id]);
       });
@@ -113,20 +111,17 @@ export class AgregarComponent implements OnInit {
       const dialog = this.mostrarDialog();
       // ---------------- FORMA # 1 ----------------
       dialog.afterClosed().subscribe((result) => {
-        console.log('result:', result);
+        // console.log('result:', result);
         if (result) {
-          this.heroesService.deleteHeroe(this.heroe.id!)
-            .subscribe((item) => {
-              this.router.navigate(['/heroes/listado']);
-              return true;
-            }
-          );
+          this.heroesService.deleteHeroe(this.heroe.id!).subscribe((item) => {
+            this.router.navigate(['/heroes/listado']);
+            return true;
+          });
         }
       });
       // ---------------- TODO: FORMA # 2 ----------------
       // dialog.afterClosed().pipe(
       //   switchMap( (result): any => {
-      //     console.log("result:", result);
       //     return;
       //   })
       // )
@@ -142,7 +137,7 @@ export class AgregarComponent implements OnInit {
     });
   }
 
-  public mostrarDialog(): MatDialogRef<ConfirmarComponent>{
+  public mostrarDialog(): MatDialogRef<ConfirmarComponent> {
     const dialog = this.dialog.open(ConfirmarComponent, {
       width: '300px',
       data: { ...this.heroe },

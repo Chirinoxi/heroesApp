@@ -1,38 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
-import { Usuario } from '../../interfaces/usuarios-response.interface'
+import { Router } from '@angular/router';
+import { Usuario } from '../../interfaces/usuarios-response.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class LoginComponent implements OnInit {
+  constructor(private router: Router, private authService: AuthService) {}
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public login(): void {
-    this.authService.login()
-      .subscribe((user: Usuario) => {
-        console.log('item:', user);
-        if (user.id) {
-          this.router.navigate(['./heroes']);
-        }
-      });
-    return
+    this.authService.login().subscribe((user: Usuario) => {
+      if (user.id) {
+        this.router.navigate(['./heroes']);
+      }
+    });
+    return;
+  }
+
+  public loginWithoutCredentials(): void {
+    this.router.navigate(['./heroes']);
   }
 
   public logout(): void {
     console.log('Cerrando sesión .....');
-    return
+    return;
   }
-
 }

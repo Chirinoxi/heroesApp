@@ -48,7 +48,6 @@ export class HeroesService {
   public insertHeroe(heroe: Heroe): Observable<Heroe> {
     const obj = Object.entries(heroe);
     let url: string = `${this.baseUrl.toString()}heroes`;
-    console.log('url:', url);
     // for (const i of obj) {
     //   const key: string = i[0] as string;
     //   const value: string = i[1] as string;

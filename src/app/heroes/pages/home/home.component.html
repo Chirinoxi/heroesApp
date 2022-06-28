@@ -4,9 +4,8 @@
             <mat-icon>menu</mat-icon>
         </button>
         <div class="logout-div">
-            <span>Ignacio</span>
-            <button mat-button
-                    (click)="logout()">
+            <span>{{ this.auth.usuario }}</span>
+            <button mat-button (click)="logout()">
                 Logout
             </button>
         </div>
@@ -23,20 +22,15 @@
         </mat-toolbar>
         <mat-nav-list>
             <!-- Ya estamos en la ruta heroes -->
-            <a routerLink="./listado" 
-               mat-list-item (click)="sidenav.toggle()">
+            <a routerLink="./listado" mat-list-item (click)="sidenav.toggle()">
                 <mat-icon mat-list-icon>label</mat-icon>
                 <span>Listado de Héroes</span>
             </a>
-            <a routerLink="./agregar"
-               mat-list-item
-               (click)="sidenav.toggle()">
+            <a routerLink="./agregar" mat-list-item (click)="sidenav.toggle()">
                 <mat-icon mat-list-icon>add</mat-icon>
                 <span>Añadir Héroe</span>
             </a>
-            <a routerLink="./buscar"
-               mat-list-item
-               (click)="sidenav.toggle()">
+            <a routerLink="./buscar" mat-list-item (click)="sidenav.toggle()">
                 <mat-icon mat-list-icon>search</mat-icon>
                 <span>Buscar Héroe</span>
             </a>

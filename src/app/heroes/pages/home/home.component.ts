@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
-import { Usuario } from 'src/app/auth/interfaces/usuarios-response.interface'
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/auth/interfaces/usuarios-response.interface';
 import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
@@ -11,24 +11,20 @@ import { AuthService } from '../../../auth/services/auth.service';
       .container {
         margin: 15px;
       }
-    `
-  ]
+    `,
+  ],
 })
 export class HomeComponent implements OnInit {
+  constructor(private router: Router, private authService: AuthService) {}
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) { }
+  ngOnInit(): void {}
 
-  public get auth(): Usuario | undefined {
-    return this.authService.auth;
+  public get auth(): Usuario {
+    return { ...this.authService.auth! };
   }
 
-  ngOnInit(): void {
-  }
-
-  public logout(): void{
-    this.router.navigate(['./']);
+  public logout(): void {
+    this.router.navigate(['./auth/login']);
+    this.authService.logout();
   }
 }
